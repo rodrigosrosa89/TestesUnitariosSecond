@@ -1,16 +1,20 @@
 package test;
 
+import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runners.MethodSorters;
 
 import model.Livro;
 import model.Pilha;
 
+@FixMethodOrder(MethodSorters.DEFAULT)
 class PilhaTestFixture {
 	
 	private static Pilha pilha;
@@ -55,7 +59,12 @@ class PilhaTestFixture {
 
 	@Test
 	void testNaoAdicionaAlemLimite() {
-		pilha.push(new Livro("A volta ao mundo"));
+		try {
+			pilha.push(new Livro("A volta ao mundo"));
+			fail("Teste incorreto, deveria ocorrer a exceção");
+		} catch (ArrayStoreException e) {
+			assertEquals("Passou do limite", e.getMessage());
+		}
 		Livro livro = pilha.pop();
 		assertEquals("O Sol", livro.getTitulo());
 		System.out.println("Executou teste não adiciona além do limite");
