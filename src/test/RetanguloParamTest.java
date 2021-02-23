@@ -23,7 +23,11 @@ public class RetanguloParamTest {
 
 	@Parameters
 	public static Collection<Object[]> parametros() {
-		return Arrays.asList(new Object[][] { { 10, 20, 200 }, { 10, 30, 300 }, { 10, 40, 400 }, { 10, 50, 500 } });
+		return Arrays.asList(new Object[][] { 
+			{ 10, 20, 200 }, 
+			{ 10, 30, 300 }, 
+			{ 10, 40, 400 }, 
+			{ 10, 50, 500 } });
 	}
 
 	public RetanguloParamTest(int base, int altura, int area) {
@@ -37,11 +41,6 @@ public class RetanguloParamTest {
 		Retangulo retangulo = new Retangulo(base, altura);
 		int resultado = retangulo.calcularArea();
 		assertEquals(resultado, area);
-	}
-
-	@Test
-	public void testCalcularPerimetro() {
-
 	}
 
 }

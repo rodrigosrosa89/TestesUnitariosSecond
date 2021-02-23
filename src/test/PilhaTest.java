@@ -1,34 +1,42 @@
 package test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+
+import org.junit.Test;
+
+import dao.PilhaDAO;
 import model.Livro;
 import model.Pilha;
 
 public class PilhaTest {
+	
+	//@Mock
+	//public PilhaDAO pilhaDAO; 
+	
+	PilhaDAO pilhaDAO = mock(PilhaDAO.class);
 
-	Pilha pilha = new Pilha();
+	@Test
+	public void testeRetiraUltimoLivro() {
+		Pilha pilha = new Pilha(pilhaDAO);
+		Livro livro = new Livro("A fortaleza");
+		pilha.push(livro);
 
-	public boolean testeRetiraUltimoLivro() {
-		Livro livro1 = new Livro("primeiro");
-		pilha.push(livro1);
+		livro = new Livro("A emboscada");
+		pilha.push(livro);
 
-		Livro livro2 = new Livro("segundo");
-		pilha.push(livro2);
+		livro = new Livro("O Naufrago");
+		pilha.push(livro);
 
-		Livro livro3 = new Livro("terceiro");
-		pilha.push(livro3);
+		String resultadoEsperado = "O Naufrago";
+		
+		assertEquals(pilha.pop().getTitulo(), resultadoEsperado);
 
-		Livro livro4 = new Livro("quarto");
-		pilha.push(livro4);
-
-		Livro ultimoLivro = pilha.pop();
-
-		if (ultimoLivro == livro4) {
-			return true;
-		}
-		return false;
 	}
 
-	public boolean testaLimiteLivros() {
+	@Test(expected=Exception.class)
+	public void testaLimiteLivros() {
+		Pilha pilha = new Pilha(pilhaDAO);
 		Livro livro1 = new Livro("A primeiro");
 		pilha.push(livro1);
 
@@ -47,20 +55,21 @@ public class PilhaTest {
 		Livro livro6 = new Livro("A sexto");
 		pilha.push(livro6);
 
-		return pilha.pop() == livro5;
-
 	}
 
-	public boolean testNaoAdicionaLivroForaPadraoNome() {
-		Pilha pilha1 = new Pilha();
+	@Test
+	public void testNaoAdicionaLivroForaPadraoNome() {
+		Pilha pilha1 = new Pilha(pilhaDAO);
 
-		Livro livro0 = new Livro("Alô");
-		pilha1.push(livro0);
-
-		Livro livro1 = new Livro("Homem de ferro");
+		Livro livro1 = new Livro("A Fortaleza");
 		pilha1.push(livro1);
 
-		return pilha1.pop() == livro0;
+		Livro livro2 = new Livro("Homem de ferro");
+		pilha1.push(livro2);
+
+		String resultadoEsperado = "A Fortaleza";
+		
+		assertEquals(pilha1.pop().getTitulo(), resultadoEsperado);
 
 	}
 }

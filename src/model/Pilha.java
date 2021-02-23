@@ -2,10 +2,17 @@ package model;
 
 import java.util.ArrayList;
 
-public class Pilha {
+import dao.PilhaDAO;
 
+public class Pilha {
 	int limite = 5;
 	ArrayList<Livro> pilha = new ArrayList<Livro>();
+	private PilhaDAO pilhaDao;
+	
+	public Pilha(PilhaDAO pilhaDao) {
+		this.pilhaDao = pilhaDao;
+	}
+
 
 	public void push(Livro livro) {
 		if(pilha.size() >= limite) {
@@ -17,6 +24,7 @@ public class Pilha {
 		}
 		 
 		pilha.add(livro);
+		pilhaDao.save(this);
 	}
 	
 	public Livro pop() {
