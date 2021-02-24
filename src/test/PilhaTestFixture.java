@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runners.MethodSorters;
 
-import dao.FakePilhaDAO;
+import dao.PilhaDAO;
 import model.Livro;
 import model.Pilha;
 
@@ -22,7 +22,7 @@ class PilhaTestFixture {
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		pilha = new Pilha(new FakePilhaDAO());
+		pilha = new Pilha(new PilhaDAO());
 		System.out.println("Executou o BeforeClass");
 		
 	}
